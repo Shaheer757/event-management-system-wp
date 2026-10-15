@@ -1,23 +1,28 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from './redux/slices/authSlice';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Events from './pages/Events';
+import EventDetails from './pages/EventDetails';
+import MyEvents from './pages/MyEvents';
 
 function App() {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
   return (
-    <div>
-      <h1>Redux Test</h1>
-      <p>Logged in: {isAuthenticated ? "Yes" : "No"}</p>
-      <p>User: {user ? user.name : "None"}</p>
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Events</Link> |{' '}
+        <Link to="/login">Login</Link> |{' '}
+        <Link to="/register">Register</Link> |{' '}
+        <Link to="/my-events">My Events</Link>
+      </nav>
 
-      <button onClick={() => dispatch(login({ name: "Shaheer" }))}>
-        Log In
-      </button>
-      <button onClick={() => dispatch(logout())}>
-        Log Out
-      </button>
-    </div>
+      <Routes>
+        <Route path="/" element={<Events />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/events/:id" element={<EventDetails />} />
+        <Route path="/my-events" element={<MyEvents />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
