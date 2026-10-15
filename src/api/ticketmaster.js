@@ -12,3 +12,15 @@ export async function fetchEvents() {
   const data = await response.json();
   return data;
 }
+
+export async function fetchEventById(id) {
+  const url = `https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${API_KEY}`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Failed to fetch event details');
+  }
+
+  const data = await response.json();
+  return data;
+}
