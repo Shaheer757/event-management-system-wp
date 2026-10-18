@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { cancelRegistration } from '../redux/slices/registrationsSlice';
+import EventCard from '../components/EventCard';
 
 function MyEvents() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
@@ -20,33 +21,12 @@ function MyEvents() {
   }
 
   const myRegistrations = registrations.filter((r) => r.userEmail === user.email);
-
-  const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
-
+  const today = new Date().toISOString().split('T')[0];
   const upcoming = myRegistrations.filter((r) => r.event.date >= today);
   const completed = myRegistrations.filter((r) => r.event.date < today);
 
   function handleCancel(eventId) {
     dispatch(cancelRegistration({ userEmail: user.email, eventId }));
-  }
-
-  function renderEventCard(r) {
-    return (
-      <div
-        key={r.event.id}
-        style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '10px', width: '250px' }}
-      >
-        {r.event.image && (
-          <img src={r.event.image} alt={r.event.name} style={{ width: '100%', borderRadius: '6px' }} />
-        )}
-        <h4>{r.event.name}</h4>
-        <p>{r.event.date || "Date TBA"}</p>
-        <p>{r.event.venue || "Venue TBA"}</p>
-        <Link to={`/events/${r.event.id}`}>View Details</Link>
-        <br />
-        <button onClick={() => handleCancel(r.event.id)}>Cancel Registration</button>
-      </div>
-    );
   }
 
   return (
@@ -58,7 +38,17 @@ function MyEvents() {
         <p>No upcoming events.</p>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {upcoming.map(renderEventCard)}
+          {upcoming.map((r) => (
+            <EventCard
+              key={r.event.id}
+              id={r.event.id}
+              name={r.event.name}
+              image={r.event.image}
+              date={r.event.date}
+              venue={r.event.venue}
+              onCancel={() => handleCancel(r.event.id)}
+            />
+          ))}
         </div>
       )}
 
@@ -67,7 +57,17 @@ function MyEvents() {
         <p>No completed events.</p>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {completed.map(renderEventCard)}
+          {completed.map((r) => (
+            <EventCard
+              key={r.event.id}
+              id={r.event.id}
+              name={r.event.name}
+              image={r.event.image}
+              date={r.event.date}
+              venue={r.event.venue}
+              onCancel={() => handleCancel(r.event.id)}
+            />
+          ))}
         </div>
       )}
     </div>

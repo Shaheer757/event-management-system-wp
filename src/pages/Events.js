@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { fetchEvents } from '../api/ticketmaster';
+import EventCard from '../components/EventCard';
 
 function Events() {
   const [events, setEvents] = useState([]);
@@ -9,6 +10,7 @@ function Events() {
 
   const [keyword, setKeyword] = useState('');
   const [category, setCategory] = useState('');
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   function loadEvents(searchKeyword = '', searchCategory = '') {
     setLoading(true);
@@ -44,17 +46,21 @@ function Events() {
 
   return (
     <div>
+      {isAuthenticated && user && (
+       <h4 className="fw-bold mb-5 text-center">Welcome {user.name}!</h4>
+      )}
       <h2>Upcoming Events</h2>
 
       <form onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="Search events..."
+          placeholder="  Search Events"
           value={keyword}
+          style={{borderRadius: '10px', borderBlockColor: '#00000', marginRight: '10px'}}
           onChange={(e) => setKeyword(e.target.value)}
         />
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select className='fw-bold' value={category} onChange={(e) => setCategory(e.target.value) }style={{borderRadius: '10px', borderBlockColor: '#00000', marginRight: '10px'}}>
           <option value="">All Categories</option>
           <option value="Music">Music</option>
           <option value="Sports">Sports</option>
@@ -63,35 +69,27 @@ function Events() {
           <option value="Miscellaneous">Miscellaneous</option>
         </select>
 
-        <button type="submit">Search</button>
-        <button type="button" onClick={handleClear}>Clear</button>
+        <button className='fw-bold' type="submit" style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginRight: '10px'}}>Search</button>
+        <button className='fw-bold' type="button" style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginRight: '10px'}} onClick={handleClear}>Clear</button>
       </form>
 
       {loading && <p>Loading events...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: '#D9361E' }}>{error}</p>}
 
       {!loading && !error && events.length === 0 && (
         <p>No events found. Try a different search.</p>
       )}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '80px', marginTop: '40px'}}>
         {events.map((event) => (
-          <div
+          <EventCard
             key={event.id}
-            style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '10px', width: '250px' }}
-          >
-            {event.images && event.images[0] && (
-              <img
-                src={event.images[0].url}
-                alt={event.name}
-                style={{ width: '100%', borderRadius: '6px' }}
-              />
-            )}
-            <h3>{event.name}</h3>
-            <p>{event.dates?.start?.localDate || "Date TBA"}</p>
-            <p>{event._embedded?.venues?.[0]?.name || "Venue TBA"}</p>
-            <Link to={`/events/${event.id}`}>View Details</Link>
-          </div>
+            id={event.id}
+            name={event.name}
+            image={event.images?.[0]?.url}
+            date={event.dates?.start?.localDate}
+            venue={event._embedded?.venues?.[0]?.name}
+          />
         ))}
       </div>
     </div>

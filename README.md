@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# Event Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based Event Management System built with Redux Toolkit, React Router, and the Ticketmaster Discovery API. Users can register/login, explore and search events, view event details, register for events, and manage their registrations.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- User registration, login, and logout (simulated frontend authentication)
+- Authentication state persisted via Local Storage
+- Browse, search, and filter events by keyword and category (via Ticketmaster API)
+- View detailed event information (date, time, venue, image, category)
+- Register and cancel registration for events
+- "My Events" page showing upcoming and completed registered events
+- Protected routes (My Events requires login)
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React.js
+- Redux Toolkit (`configureStore`, `createSlice`, `useSelector`, `useDispatch`)
+- React Router (`BrowserRouter`, `Routes`, dynamic routes, `useParams`, `useNavigate`)
+- Ticketmaster Discovery API
+- Local Storage (for auth and registration persistence)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Setup Instructions
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+git clone https://github.com/Shaheer757/event-management-system-wp.git
+cd event-management-system-wp
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install dependencies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+3. Create a `.env` file in the project root and add your Ticketmaster API key:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+REACT_APP_TICKETMASTER_API_KEY=your_api_key_here
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   You can get a free API key at [developer.ticketmaster.com](https://developer.ticketmaster.com/).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Start the development server:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+npm start
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
 
-### Code Splitting
+src/
+├── api/ # Ticketmaster API functions
+├── pages/ # Route-level page components (Login, Register, Events, etc.)
+├── redux/
+│ ├── slices/ # Redux Toolkit slices (auth, registrations)
+│ └── store.js # Redux store configuration
+├── App.js # Routing and navigation
+└── index.js # App entry point, Redux Provider setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- This project uses frontend-only simulated authentication — there is no real backend. User accounts are stored in Local Storage, not a database.
+- Event registration data is stored as a simplified object (id, name, date, venue, image) rather than the full Ticketmaster API response, to keep Local Storage usage minimal.

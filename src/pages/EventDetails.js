@@ -58,8 +58,10 @@ function EventDetails() {
   }
 
   return (
-    <div>
-      <Link to="/">← Back to Events</Link>
+    <div className="text-center">
+      <div style={{ textAlign: 'left', marginBottom: '80px' }}>
+        <Link className="fw-bold" to="/">← Back to Events</Link>
+      </div>
       <h2>{event.name}</h2>
 
       {event.images && event.images[0] && (
@@ -75,10 +77,10 @@ function EventDetails() {
       {isRegistered ? (
         <div>
           <p style={{ color: 'green' }}>You are registered for this event!</p>
-          <button onClick={handleCancel}>Cancel Registration</button>
+          <button style={{backgroundColor: 'red', borderRadius: '10px'}} onClick={handleCancel}>Cancel Registration</button>
         </div>
       ) : (
-        <button onClick={handleRegister}>Register for Event</button>
+        <button style={{backgroundColor: '#A5D6A7', borderRadius: '10px'}} onClick={handleRegister}>Register for Event</button>
       )}
     </div>
   );

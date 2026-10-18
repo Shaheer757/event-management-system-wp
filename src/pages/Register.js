@@ -33,23 +33,23 @@ function Register(){
 
   return(
     <div>
-      <h2>Register</h2>
+      <h2 className="mb-4">Register</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="mb-3 fw-bold">
          <label>Name:</label>
-         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+         <input type="text" style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginLeft: '41px'}}  value={name} onChange={(e) => setName(e.target.value)} />
         </div>
-        <div>
+        <div className="mb-3 fw-bold">
          <label>Email:</label>
-         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+         <input type="email" style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginLeft: '45px'}}  value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div>
+        <div className="mb-4 fw-bold">
          <label>Password:</label>
-         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+         <input type="password" style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginLeft: '13px'}} value={password} onChange={(e) => setPassword(e.target.value)} />
         </div> 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <button type="submit">Register</button>
+        <button type="submit" style={{backgroundColor: '#A5D6A7',borderRadius: '10px'}} >Register</button>
       </form>
     </div>
   );

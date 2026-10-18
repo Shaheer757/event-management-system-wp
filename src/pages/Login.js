@@ -35,20 +35,20 @@ function Login() {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2 className= "mb-4">Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className= "mb-3">
+          <label className="fw-bold">Email:</label>
+          <input type="email" value={email} style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginLeft: '42px'}} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div className= "mb-4">
+          <label className="fw-bold">Password:  {"  "}</label>
+          <input type="password" value={password} style={{backgroundColor: '#A5D6A7',borderRadius: '10px', marginLeft: '10px'}} onChange={(e) => setPassword(e.target.value)} />
         </div>
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <button type="submit">Login</button>
+        <button type="submit" style={{backgroundColor: '#A5D6A7', borderRadius: '10px'}}>Login</button>
       </form>
     </div>
   );
